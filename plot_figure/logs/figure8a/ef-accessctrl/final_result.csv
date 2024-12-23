@@ -1,0 +1,2 @@
+time,ddl_satis_ratio,cluster_spec,trace_file,scheduler,scheme
+20241222-11-54-27,0.7282051282051282,cluster_specs/n16g4.csv,../traces_for_ElasticFlow/elasticVpollux_e.csv,ef-accessctrl,elastic

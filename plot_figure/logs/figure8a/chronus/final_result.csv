@@ -1,0 +1,2 @@
+time,ddl_satis_ratio,cluster_spec,trace_file,scheduler,scheme
+20241222-11-57-19,0.4307692307692308,n16g4,../traces_for_chronus/elasticVpollux_e.csv,chronus,elastic

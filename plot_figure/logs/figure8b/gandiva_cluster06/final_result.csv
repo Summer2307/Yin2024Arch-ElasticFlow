@@ -1,0 +1,2 @@
+time,ddl_satis_ratio,cluster_spec,trace_file,scheduler,scheme
+20241222-12-59-15,0.3919031719532554,cluster_specs/n64g8.csv,../traces_for_ElasticFlow/cluster06.csv,gandiva,gandiva

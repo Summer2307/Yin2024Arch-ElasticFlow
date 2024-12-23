@@ -1,0 +1,2 @@
+time,ddl_satis_ratio,cluster_spec,trace_file,scheduler,scheme
+20241222-09-01-33,1.0,n16g8,../traces_for_chronus/100jobs_1500lam.csv,chronus,elastic

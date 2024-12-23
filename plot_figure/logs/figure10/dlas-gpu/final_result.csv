@@ -1,0 +1,2 @@
+time,ddl_satis_ratio,cluster_spec,trace_file,scheduler,scheme
+20241222-09-00-39,1.0,cluster_specs/n16g8.csv,../traces_for_ElasticFlow/100jobs_1500lam.csv,dlas-gpu,elastic

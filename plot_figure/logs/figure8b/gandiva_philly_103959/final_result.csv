@@ -1,0 +1,2 @@
+time,ddl_satis_ratio,cluster_spec,trace_file,scheduler,scheme
+20241222-12-58-12,0.4132420091324201,cluster_specs/n32g8.csv,../traces_for_ElasticFlow/philly_103959.csv,gandiva,gandiva

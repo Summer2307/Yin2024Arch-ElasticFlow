@@ -1,0 +1,1 @@
+job_id,user,num_gpu,batch_size,submit_time,iterations,model_name,duration,interval,expect_time_list,expect_value_list,best_effort,job_type

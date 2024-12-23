@@ -1,0 +1,2 @@
+time,ddl_satis_ratio,cluster_spec,trace_file,scheduler,scheme
+20241222-12-59-11,0.4657534246575342,cluster_specs/n32g8.csv,../traces_for_ElasticFlow/philly_103959.csv,dlas-gpu,elastic
