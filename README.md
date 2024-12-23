@@ -1,35 +1,56 @@
-# ElasticFlow-artifact
+# ElasticFlow-复现
 
-We provide the artifact for the ASPLOS 2023 paper "ElasticFlow: An Elastic Serverless Training Platform for Distributed Deep Learning", including:
+## 模拟器实验复现
 
-- The main implementation of ElasticFlow.
-- Cluster simulation scripts (Sec 6.3 \& 6.4 \& 6.5), which get the main results of the paper.
-- Testbed experiment scripts (Sec 6.2 \& 6.6).
-- Figure plotting scripts.
+## 主要文件
+- `ElasticFlow/` 包含模拟器的主要代码，参考 [Tiresias](https://github.com/SymbioticLab/Tiresias)。
+	- `chronus-scheduler/` 包含Chronus调度算法的源代码实现，由 [this repo](https://github.com/S-Lab-System-Group/ChronusArtifact)提供。
+	- `scheduler/` 包含ElasticFlow算法的实现和baseline算法的实现
+		- `cluster_spec/` 包含配置文件
+		- `runtime/` 包含用于调度、节点等联系的gRPC源代码
+		- `throughputs_A100/` 包含各模型在A100 GPU上的运行数据
+		- `throughputs_T4/` 包含各模型在T4 GPU上的运行数据（由 [adaptdl](https://github.com/petuum/adaptdl/tree/osdi21-artifact)提供)
+		- `trace_generator/` 包含生成job traces的文件
+	
+## 复现步骤
 
-## Simulation Experiments
+### conda虚拟环境创建、需要的包安装
+```Bash
+# create conda env
+conda create -n elasticflow python=3.8
+conda activate elasticflow
+# install dependencies
+cd ElasticFlow
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+# make gRPC
+cd chronus-scheduler
+make
+cd ../scheduler
+make
+```
+Chronus需要的Gurobi optimizer配置： [official website](https://www.gurobi.com) 。
 
-### General Simulation Experiments
+### 具体步骤
 
-Please see `ElasticFlow/README.md` for more details. 
+0. 准备好Job Traces 
+从10个Microsoft internal ITP 集群获取 [job traces](https://github.com/microsoft/elasticflow-traces) ，解压到相应文件夹
 
-### Pollux simulation
+```Bash
+tar -xvzf elasticflow-traces/data/elasticflow-traces.tar.gz -C ElasticFlow/traces_for_ElasticFlow/
+```
 
-Please see `pollux/pollux_simulator/README.md` for more details. 
+1. 运行对应的实验（对应原文中的Figure）
+```Bash
+cd scheduler
+```
+- Figure 8(a): `source run_fig8a.sh`. （约30分钟）
+- Figure 8(b): `source run_fig8b.sh`. （运行了2天左右，结果未放在报告中）This might take a few days to finish the simulation of all of the traces!
+- Figure 9: `bash run_fig9.sh`. （约10分钟）
+- Figure 10: `source run_fig10.sh`. （约2分钟）
 
-## Testbed Experiments
-Note: Due to the execution scripts of testbed experiments are highly related to internal testbed platform, we only demonstrate the functionality and provide the reproduction steps on the hardware devices we use. Please adjust to your platform if you would like to execute the testbed experiment.
+结果储存在`<repo>/plot_figure/logs/` 文件夹
 
-The testbed experiments require 16 nodes, each with 8 A100 GPUs, 96 CPU cores, 900 GB RAM, and eight NVIDIA Mellanox HDR InfiniBand HCAs. 
-You may use the Azure Standard_ND96asr_A100 VMs for reproduction.
+2. 绘图
 
-### General Testbed Experiments
-Please see `ElasticFlow/README.md` for more details.
-
-### Pollux Testbed Experiments
-As the Pollux baseline is implemented on k8s, we do not interage Pollux in the ElasticFlow system for comparison. We use the open-sourced artifact from the [Pollux repo](https://github.com/petuum/adaptdl/tree/osdi21-artifact) for testbed experiments. 
-
-Please see `pollux/pollux_testbed/README.md` for more details.
-
-## Plotting Figures
-Please refer to `<repo>/plot_figure/README.md`
+主要参考 `<repo>/plot_figure/README.md`
